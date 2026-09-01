@@ -1,13 +1,13 @@
-# mcp-dump Agent Notes
+# mcpdump Agent Notes
 
-`mcp-dump` is a small Go CLI that starts a stdio Model Context Protocol (MCP)
+`mcpdump` is a small Go CLI that starts a stdio Model Context Protocol (MCP)
 server command, initializes a client session, and prints server capabilities,
 tools, prompts, resources, and resource templates.
 
 ## Project Layout
 
-- `cmd/mcp-dump/main.go`: executable entrypoint.
-- `cmd/mcp-dump/cmd/command.go`: Cobra command, flags, examples, and argument validation.
+- `cmd/mcpdump/main.go`: executable entrypoint.
+- `cmd/mcpdump/cmd/command.go`: Cobra command, flags, examples, and argument validation.
 - `internal/apps/mcpdump`: MCP inspection workflow and output formatting.
 - `internal/apps/appio`: synchronized writer helpers.
 - `internal/logging`: process-wide structured logging setup.
@@ -36,7 +36,7 @@ Equivalent direct commands:
 ```sh
 go test ./...
 go tool golangci-lint run ./...
-go build -o bin/mcp-dump ./cmd/mcp-dump
+go build -o bin/mcpdump ./cmd/mcpdump
 ```
 
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:970c3bf2 -->

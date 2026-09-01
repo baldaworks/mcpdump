@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/normahq/mcp-dump/cmd/mcp-dump/cmd"
+	"github.com/baldaworks/mcpdump/cmd/mcpdump/cmd"
 )
 
 func main() {

@@ -24,22 +24,43 @@ jobs:
       - name: Install omnidist
         run: npm install -g '@omnidist/omnidist@0.1.30'
       - name: Build artifacts
-        run: omnidist --profile 'mcp-dump' build
+        run: omnidist --profile 'mcpdump' build
       - name: Stage artifacts
-        run: omnidist --profile 'mcp-dump' npm stage
+        run: |
+          omnidist --profile 'mcpdump' npm stage
+          node -e '
+            const fs = require("fs");
+            const path = require("path");
+            function walk(dir) {
+              for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+                const full = path.join(dir, entry.name);
+                if (entry.isDirectory()) {
+                  walk(full);
+                } else if (entry.name === "package.json") {
+                  const j = JSON.parse(fs.readFileSync(full, "utf8"));
+                  if (j.name !== "@baldaworks/mcpdump" && j.bin) {
+                    delete j.bin;
+                    fs.writeFileSync(full, JSON.stringify(j, null, 2) + "\n");
+                    console.log("Removed bin from", full);
+                  }
+                }
+              }
+            }
+            walk(".omnidist/mcpdump/npm");
+          '
       - name: Verify artifacts
-        run: omnidist --profile 'mcp-dump' npm verify
+        run: omnidist --profile 'mcpdump' npm verify
       - name: Package GitHub release assets
         run: |
           version="${GITHUB_REF_NAME#v}"
-          mkdir -p .omnidist/mcp-dump/release
-          tar -czf ".omnidist/mcp-dump/release/mcp-dump_${version}_darwin_amd64.tar.gz" -C .omnidist/mcp-dump/dist/darwin/amd64 mcp-dump
-          tar -czf ".omnidist/mcp-dump/release/mcp-dump_${version}_darwin_arm64.tar.gz" -C .omnidist/mcp-dump/dist/darwin/arm64 mcp-dump
-          tar -czf ".omnidist/mcp-dump/release/mcp-dump_${version}_linux_amd64.tar.gz" -C .omnidist/mcp-dump/dist/linux/amd64 mcp-dump
-          tar -czf ".omnidist/mcp-dump/release/mcp-dump_${version}_linux_arm64.tar.gz" -C .omnidist/mcp-dump/dist/linux/arm64 mcp-dump
-          tar -czf ".omnidist/mcp-dump/release/mcp-dump_${version}_windows_amd64.tar.gz" -C .omnidist/mcp-dump/dist/windows/amd64 mcp-dump.exe
+          mkdir -p .omnidist/mcpdump/release
+          tar -czf ".omnidist/mcpdump/release/mcpdump_${version}_darwin_amd64.tar.gz" -C .omnidist/mcpdump/dist/darwin/amd64 mcpdump
+          tar -czf ".omnidist/mcpdump/release/mcpdump_${version}_darwin_arm64.tar.gz" -C .omnidist/mcpdump/dist/darwin/arm64 mcpdump
+          tar -czf ".omnidist/mcpdump/release/mcpdump_${version}_linux_amd64.tar.gz" -C .omnidist/mcpdump/dist/linux/amd64 mcpdump
+          tar -czf ".omnidist/mcpdump/release/mcpdump_${version}_linux_arm64.tar.gz" -C .omnidist/mcpdump/dist/linux/arm64 mcpdump
+          tar -czf ".omnidist/mcpdump/release/mcpdump_${version}_windows_amd64.tar.gz" -C .omnidist/mcpdump/dist/windows/amd64 mcpdump.exe
       - name: Pack staged artifacts
-        run: tar -czf omnidist-staged.tgz .omnidist/mcp-dump
+        run: tar -czf omnidist-staged.tgz .omnidist/mcpdump
       - name: Upload staged artifacts
         uses: actions/upload-artifact@v7.0.1
         with:
@@ -49,13 +70,13 @@ jobs:
         uses: actions/upload-artifact@v7.0.1
         with:
           name: github-release-assets
-          path: .omnidist/mcp-dump/release/*
+          path: .omnidist/mcpdump/release/*
           if-no-files-found: error
       - name: Upload build artifacts
         uses: actions/upload-artifact@v7.0.1
         with:
           name: dist
-          path: .omnidist/mcp-dump/dist/**/*
+          path: .omnidist/mcpdump/dist/**/*
           if-no-files-found: error
 
   publish_github_release:
@@ -88,7 +109,9 @@ jobs:
       contents: read
       id-token: write
     env:
-      NPM_PACKAGE: '@normahq/mcp-dump'
+      NPM_PACKAGE: '@baldaworks/mcpdump'
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+      NPM_PUBLISH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
     steps:
       - uses: actions/checkout@v7.0.0
       - uses: actions/setup-node@v6.4.0
@@ -105,12 +128,12 @@ jobs:
       - name: Restore staged artifacts
         run: tar -xzf omnidist-staged.tgz
       - name: Verify artifacts
-        run: omnidist --profile 'mcp-dump' npm verify
+        run: omnidist --profile 'mcpdump' npm verify
       - name: Publish npm artifacts
         run: |
           NPM_VERSION="${GITHUB_REF_NAME#v}"
           if npm view "${NPM_PACKAGE}@${NPM_VERSION}" version >/dev/null 2>&1; then
             echo "${NPM_PACKAGE}@${NPM_VERSION} already exists; skipping publish."
           else
-            omnidist --profile 'mcp-dump' npm publish
+            omnidist --profile 'mcpdump' npm publish
           fi

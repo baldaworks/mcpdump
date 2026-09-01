@@ -1,6 +1,6 @@
-module github.com/normahq/mcp-dump
+module github.com/baldaworks/mcpdump
 
-go 1.26.4
+go 1.26.6
 
 require (
 	github.com/modelcontextprotocol/go-sdk v1.6.1

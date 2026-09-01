@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/normahq/mcp-dump/internal/apps/mcpdump"
-	"github.com/normahq/mcp-dump/internal/logging"
+	"github.com/baldaworks/mcpdump/internal/apps/mcpdump"
+	"github.com/baldaworks/mcpdump/internal/logging"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
@@ -15,7 +15,7 @@ func Command() *cobra.Command {
 	var debugLogs bool
 
 	cmd := &cobra.Command{
-		Use:          "mcp-dump [--json] -- <mcp-server-cmd> [args...]",
+		Use:          "mcpdump [--json] -- <mcp-server-cmd> [args...]",
 		Short:        "Inspect any stdio MCP server command",
 		Long:         "Start a stdio MCP server command and print initialize/capability information.",
 		SilenceUsage: true,
@@ -38,7 +38,7 @@ func Command() *cobra.Command {
 			if err := logging.Init(logging.WithLevel(logLevel)); err != nil {
 				return fmt.Errorf("initialize logging: %w", err)
 			}
-			ctx := log.Logger.With().Str("component", "tool.mcp_dump").Logger().WithContext(cmd.Context())
+			ctx := log.Logger.With().Str("component", "tool.mcpdump").Logger().WithContext(cmd.Context())
 
 			return mcpdump.Run(ctx, mcpdump.RunConfig{
 				Command:      serverCommand,
@@ -52,7 +52,7 @@ func Command() *cobra.Command {
 	}
 	cmd.Flags().BoolVar(&jsonOutput, "json", false, "print output as JSON")
 	cmd.Flags().BoolVar(&debugLogs, "debug", false, "enable debug logging")
-	cmd.Example = "  mcp-dump -- codex mcp-server\n  mcp-dump --json -- codex mcp-server --sandbox workspace-write"
+	cmd.Example = "  mcpdump -- codex mcp-server\n  mcpdump --json -- codex mcp-server --sandbox workspace-write"
 	return cmd
 }
 

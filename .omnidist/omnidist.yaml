@@ -1,8 +1,8 @@
 profiles:
-  mcp-dump:
+  mcpdump:
     tool:
-      name: mcp-dump
-      main: ./cmd/mcp-dump
+      name: mcpdump
+      main: ./cmd/mcpdump
     readme-path: ./README.md
     version:
       source: git-tag
@@ -23,11 +23,11 @@ profiles:
       cgo: false
     distributions:
       npm:
-        package: '@normahq/mcp-dump'
+        package: '@baldaworks/mcpdump'
         registry: https://registry.npmjs.org
         access: public
         publish-auth: trusted
-        repository-url: git+https://github.com/normahq/mcp-dump.git
+        repository-url: git+https://github.com/baldaworks/mcpdump.git
         license: MIT
         include-readme: true
         keywords:

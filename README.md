@@ -1,16 +1,16 @@
-# mcp-dump
+# mcpdump
 
-[![test](https://github.com/normahq/mcp-dump/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/normahq/mcp-dump/actions/workflows/test.yml)
-[![lint](https://github.com/normahq/mcp-dump/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/normahq/mcp-dump/actions/workflows/lint.yml)
-[![security](https://github.com/normahq/mcp-dump/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/normahq/mcp-dump/actions/workflows/security.yml)
-[![release](https://github.com/normahq/mcp-dump/actions/workflows/omnidist-release.yml/badge.svg)](https://github.com/normahq/mcp-dump/actions/workflows/omnidist-release.yml)
-[![npm](https://img.shields.io/npm/v/@normahq/mcp-dump)](https://www.npmjs.com/package/@normahq/mcp-dump)
-[![License](https://img.shields.io/github/license/normahq/mcp-dump)](LICENSE)
-[![Version](https://img.shields.io/github/v/tag/normahq/mcp-dump?label=version)](https://github.com/normahq/mcp-dump/tags)
+[![test](https://github.com/baldaworks/mcpdump/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/baldaworks/mcpdump/actions/workflows/test.yml)
+[![lint](https://github.com/baldaworks/mcpdump/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/baldaworks/mcpdump/actions/workflows/lint.yml)
+[![security](https://github.com/baldaworks/mcpdump/actions/workflows/security.yml/badge.svg?branch=main)](https://github.com/baldaworks/mcpdump/actions/workflows/security.yml)
+[![release](https://github.com/baldaworks/mcpdump/actions/workflows/omnidist-release.yml/badge.svg)](https://github.com/baldaworks/mcpdump/actions/workflows/omnidist-release.yml)
+[![npm](https://img.shields.io/npm/v/@baldaworks/mcpdump)](https://www.npmjs.com/package/@baldaworks/mcpdump)
+[![License](https://img.shields.io/github/license/baldaworks/mcpdump)](LICENSE)
+[![Version](https://img.shields.io/github/v/tag/baldaworks/mcpdump?label=version)](https://github.com/baldaworks/mcpdump/tags)
 
 **Inspect MCP servers before connecting tools or agents.**
 
-`mcp-dump` starts any stdio Model Context Protocol (MCP) server command and
+`mcpdump` starts any stdio Model Context Protocol (MCP) server command and
 prints initialize, capability, tool, prompt, resource, and resource-template
 metadata.
 
@@ -33,33 +33,33 @@ adding it to an agent, IDE, gateway, or automation workflow.
 Install globally:
 
 ```sh
-npm install -g @normahq/mcp-dump@latest
+npm install -g @baldaworks/mcpdump@latest
 ```
 
 Run once with `npx`:
 
 ```sh
-npx @normahq/mcp-dump@latest -- <mcp-server-cmd> [args...]
+npx @baldaworks/mcpdump@latest -- <mcp-server-cmd> [args...]
 ```
 
 Inspect an MCP server:
 
 ```sh
-mcp-dump -- codex mcp-server
-mcp-dump --json -- codex mcp-server --sandbox workspace-write
-mcp-dump --debug -- <mcp-server-cmd> [args...]
+mcpdump -- codex mcp-server
+mcpdump --json -- codex mcp-server --sandbox workspace-write
+mcpdump --debug -- <mcp-server-cmd> [args...]
 ```
 
 ## Provider Commands
 
 | Provider | Command |
 | --- | --- |
-| Codex MCP server | `mcp-dump -- codex mcp-server` |
-| Codex with sandbox | `mcp-dump --json -- codex mcp-server --sandbox workspace-write` |
-| Generic MCP | `mcp-dump -- <mcp-server-cmd> [args...]` |
+| Codex MCP server | `mcpdump -- codex mcp-server` |
+| Codex with sandbox | `mcpdump --json -- codex mcp-server --sandbox workspace-write` |
+| Generic MCP | `mcpdump -- <mcp-server-cmd> [args...]` |
 
 The `--` separator is required. Arguments before `--` are treated as
-`mcp-dump` flags; arguments after it are passed to the MCP server command.
+`mcpdump` flags; arguments after it are passed to the MCP server command.
 
 ## Output
 
@@ -91,13 +91,13 @@ reports, or CI logs.
 
 ## Repository
 
-- GitHub: <https://github.com/normahq/mcp-dump>
+- GitHub: <https://github.com/baldaworks/mcpdump>
 
 ## Contact
 
-- Issues: <https://github.com/normahq/mcp-dump/issues>
+- Issues: <https://github.com/baldaworks/mcpdump/issues>
 - Maintainer: [@metalagman](https://github.com/metalagman)
 
 ## License
 
-MIT. See the repository [LICENSE](https://github.com/normahq/mcp-dump/blob/main/LICENSE).
+MIT. See the repository [LICENSE](https://github.com/baldaworks/mcpdump/blob/main/LICENSE).

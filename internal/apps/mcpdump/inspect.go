@@ -10,8 +10,8 @@ import (
 	"strings"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
-	"github.com/normahq/mcp-dump/internal/apps/appio"
-	"github.com/normahq/mcp-dump/internal/logging"
+	"github.com/baldaworks/mcpdump/internal/apps/appio"
+	"github.com/baldaworks/mcpdump/internal/logging"
 	"github.com/rs/zerolog"
 )
 
@@ -88,7 +88,7 @@ func inspectMCPServerRaw(ctx context.Context, workingDir string, command []strin
 	if err != nil {
 		return nil, err
 	}
-	client := mcp.NewClient(&mcp.Implementation{Name: "norma-mcp-inspector", Version: "v0.0.1"}, nil)
+	client := mcp.NewClient(&mcp.Implementation{Name: "balda-mcp-inspector", Version: "v0.0.1"}, nil)
 	session, err := client.Connect(ctx, transport, nil)
 	if err != nil {
 		return nil, fmt.Errorf("connect to mcp server: %w", err)
