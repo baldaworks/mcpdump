@@ -1,6 +1,6 @@
 module github.com/baldaworks/mcpdump
 
-go 1.26.6
+go 1.26.10
 
 require (
 	github.com/modelcontextprotocol/go-sdk v1.6.1
